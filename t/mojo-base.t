@@ -5,21 +5,24 @@ use Test::More;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-package Mojo::BaseTest;
-use Mojo::Bass -strict;
+package Mojo::BaseTest {
+  use Mojo::Bass -strict;
 
-use base 'Mojo::BaseTest::Base2';
+  use base 'Mojo::BaseTest::Base2';
 
-__PACKAGE__->attr(tests => 1);
-__PACKAGE__->attr('name');
+  __PACKAGE__->attr(tests => 1);
+  __PACKAGE__->attr('name');
 
-sub more_tests { shift->{tests} += shift // 1 }
+  sub more_tests { shift->{tests} += shift // 1 }
+}
 
-package Mojo::BaseTestTest;
-use Mojo::Bass 'Mojo::BaseTest';
+package Mojo::BaseTestTest {
+  use Mojo::Bass 'Mojo::BaseTest';
+}
 
-package Mojo::BaseTestTestTest;
-use Mojo::Bass "Mojo'BaseTestTest";
+package Mojo::BaseTestTestTest {
+  use Mojo::Bass "Mojo'BaseTestTest";
+}
 
 package main;
 
