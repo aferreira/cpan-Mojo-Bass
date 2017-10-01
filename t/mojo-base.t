@@ -1,4 +1,4 @@
-use Mojo::Base -strict;
+use Mojo::Bass -strict;
 
 use Test::More;
 
@@ -6,7 +6,7 @@ use FindBin;
 use lib "$FindBin::Bin/lib";
 
 package Mojo::BaseTest;
-use Mojo::Base -strict;
+use Mojo::Bass -strict;
 
 use base 'Mojo::BaseTest::Base2';
 
@@ -16,14 +16,14 @@ __PACKAGE__->attr('name');
 sub more_tests { shift->{tests} += shift // 1 }
 
 package Mojo::BaseTestTest;
-use Mojo::Base 'Mojo::BaseTest';
+use Mojo::Bass 'Mojo::BaseTest';
 
 package Mojo::BaseTestTestTest;
-use Mojo::Base "Mojo'BaseTestTest";
+use Mojo::Bass "Mojo'BaseTestTest";
 
 package main;
 
-use Mojo::Base;
+use Mojo::Bass;
 use Mojo::BaseTest::Base1;
 use Mojo::BaseTest::Base2;
 use Mojo::BaseTest::Base3;
