@@ -26,23 +26,23 @@ sub import {
     require "$file.pm";
   }
 
+  # Mojo modules are strict!
+  $_->import for qw(strict warnings utf8);
+  feature->import(':5.10');
+
   # ISA
   if ($flag) {
     my $caller = caller;
     no strict 'refs';
     push @{"${caller}::ISA"}, $flag;
-    $class->can('_export_into')
-      ->($caller, has => sub { Mojo::Base::attr($caller, @_) });
+    @_ = ($caller, has => sub { Mojo::Base::attr($caller, @_) });
+    goto &{$class->can('_export_into')};
   }
-
-  # Mojo modules are strict!
-  $_->import for qw(strict warnings utf8);
-  feature->import(':5.10');
 }
 
 sub _export_into {
   shift;
-  Sub::Inject::sub_inject(@_);
+  goto &Sub::Inject::sub_inject;
 }
 
 1;
