@@ -1,6 +1,7 @@
 
 package Mojo::Bass;
 
+# ABSTRACT: Mojo::Base + lexical "has"
 use 5.018;
 use Mojo::Base -strict;
 
@@ -48,10 +49,6 @@ sub _export_into {
 1;
 
 =encoding utf8
-
-=head1 NAME
-
-Mojo::Bass - Mojo::Base + lexical "has"
 
 =head1 SYNOPSIS
 
