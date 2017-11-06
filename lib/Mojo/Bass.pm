@@ -15,6 +15,8 @@ use Sub::Inject 0.2.0 ();
 
 use constant ROLES => Mojo::Base::ROLES;
 
+use constant SIGNATURES => ($] >= 5.020);
+
 sub import {
   my ($class, $caller) = (shift, caller);
   return unless my @flags = @_;
@@ -43,7 +45,7 @@ sub import {
 
   # Signatures (Perl 5.20+)
   if (($flags[1] || '') eq '-signatures') {
-    Carp::croak 'Subroutine signatures require Perl 5.20+' if $] < 5.020;
+    Carp::croak 'Subroutine signatures require Perl 5.20+' unless SIGNATURES;
     require experimental;
     experimental->import('signatures');
   }
