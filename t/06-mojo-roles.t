@@ -1,10 +1,10 @@
-use Mojo::Base -strict;
+use Mojo::Bass -strict;
 
 use Test::More;
 
 BEGIN {
   plan skip_all => 'Role::Tiny 2.000001+ required for this test!'
-    unless Mojo::Base->ROLES;
+    unless Mojo::Bass->ROLES;
 }
 
 package Mojo::RoleTest::Role::LOUD;
@@ -19,32 +19,35 @@ sub hello {
   return $self->yell . ' ' . uc($self->name) . '!!!';
 }
 
-package Mojo::RoleTest::Role::quiet;
-use Mojo::Base -role;
+package Mojo::RoleTest::Role::quiet {
+  use Mojo::Bass -role;
 
-requires 'name';
+  requires 'name';
 
-has prefix => 'psst, ';
+  has prefix => 'psst, ';
 
-sub whisper {
-  my $self = shift;
-  return $self->prefix . lc($self->name);
+  sub whisper {
+    my $self = shift;
+    return $self->prefix . lc($self->name);
+  }
 }
 
-package Mojo::RoleTest;
-use Mojo::Base -base;
+package Mojo::RoleTest {
+  use Mojo::Bass -base;
 
-has name => 'bob';
+  has name => 'bob';
 
-sub hello {
-  my ($self) = shift;
-  return 'hello ' . $self->name;
+  sub hello {
+    my ($self) = shift;
+    return 'hello ' . $self->name;
+  }
 }
 
-package Mojo::RoleTest::Hello;
-use Mojo::Base -role;
+package Mojo::RoleTest::Hello {
+  use Mojo::Bass -role;
 
-sub hello {'hello mojo!'}
+  sub hello {'hello mojo!'}
+}
 
 package main;
 
