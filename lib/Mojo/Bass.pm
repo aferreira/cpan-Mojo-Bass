@@ -13,6 +13,8 @@ BEGIN {
 
 use Sub::Inject 0.2.0 ();
 
+use constant ROLES => Mojo::Base::ROLES;
+
 sub import {
   my ($class, $caller) = (shift, caller);
   return unless my @flags = @_;
@@ -22,6 +24,12 @@ sub import {
 
   # Strict
   elsif ($flags[0] eq '-strict') { $flags[0] = undef }
+
+  # Role
+  elsif ($flags[0] eq '-role') {
+    Carp::croak 'Role::Tiny 2.000001+ is required for roles' unless ROLES;
+    eval "package $caller; use Role::Tiny; 1" or die $@;
+  }
 
   # Module
   elsif ((my $file = $flags[0]) && !$flags[0]->can('new')) {
@@ -40,10 +48,10 @@ sub import {
     experimental->import('signatures');
   }
 
-  # ISA
+  # "has" and possibly ISA
   if ($flags[0]) {
     no strict 'refs';
-    push @{"${caller}::ISA"}, $flags[0];
+    push @{"${caller}::ISA"}, $flags[0] unless $flags[0] eq '-role';
     @_ = (has => sub { Mojo::Base::attr($caller, @_) });
     goto &Sub::Inject::sub_inject;
   }
