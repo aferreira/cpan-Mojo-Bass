@@ -36,8 +36,8 @@ sub import {
   # Signatures (Perl 5.20+)
   if (($flags[1] || '') eq '-signatures') {
     Carp::croak 'Subroutine signatures require Perl 5.20+' if $] < 5.020;
-    feature->import('signatures');
-    warnings->unimport('experimental::signatures');
+    require experimental;
+    experimental->import('signatures');
   }
 
   # ISA
