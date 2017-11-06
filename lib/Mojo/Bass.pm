@@ -21,11 +21,14 @@ sub import {
   my ($class, $caller) = (shift, caller);
   return unless my @flags = @_;
 
+  my @exports = ('has');
+
   # Base
-  if ($flags[0] eq '-base') { $flags[0] = $class }
+  my $base;
+  if ($flags[0] eq '-base') { $base = $class }
 
   # Strict
-  elsif ($flags[0] eq '-strict') { $flags[0] = undef }
+  elsif ($flags[0] eq '-strict') { @exports = () }
 
   # Role
   elsif ($flags[0] eq '-role') {
@@ -34,8 +37,8 @@ sub import {
   }
 
   # Module
-  elsif ((my $file = $flags[0]) && !$flags[0]->can('new')) {
-    $file =~ s!::|'!/!g;
+  elsif (($base = $flags[0]) && !$base->can('new')) {
+    (my $file = $base) =~ s!::|'!/!g;
     require "$file.pm";
   }
 
@@ -50,10 +53,14 @@ sub import {
     experimental->import('signatures');
   }
 
-  # "has" and possibly ISA
-  if ($flags[0]) {
+  # ISA
+  if ($base) {
     no strict 'refs';
-    push @{"${caller}::ISA"}, $flags[0] unless $flags[0] eq '-role';
+    push @{"${caller}::ISA"}, $base;
+  }
+
+  # "has"
+  if (@exports) {
     @_ = (has => sub { Mojo::Base::attr($caller, @_) });
     goto &Sub::Inject::sub_inject;
   }
