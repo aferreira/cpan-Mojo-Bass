@@ -44,14 +44,9 @@ sub import {
   if ($flags[0]) {
     no strict 'refs';
     push @{"${caller}::ISA"}, $flags[0];
-    @_ = ($caller, has => sub { Mojo::Base::attr($caller, @_) });
-    goto &{$class->can('_export_into')};
+    @_ = (has => sub { Mojo::Base::attr($caller, @_) });
+    goto &Sub::Inject::sub_inject;
   }
-}
-
-sub _export_into {
-  shift;
-  goto &Sub::Inject::sub_inject;
 }
 
 1;
