@@ -14,7 +14,7 @@ BEGIN {
 use Sub::Inject 0.2.0 ();
 
 sub import {
-  my $class = shift;
+  my ($class, $caller) = (shift, caller);
   return unless my @flags = @_;
 
   # Base
@@ -42,7 +42,6 @@ sub import {
 
   # ISA
   if ($flags[0]) {
-    my $caller = caller;
     no strict 'refs';
     push @{"${caller}::ISA"}, $flags[0];
     @_ = ($caller, has => sub { Mojo::Base::attr($caller, @_) });
