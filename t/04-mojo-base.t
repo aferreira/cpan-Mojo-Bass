@@ -1,4 +1,4 @@
-use Mojo::Bass -strict;
+use Jojo::Base -strict;
 
 use Test::More;
 
@@ -6,7 +6,7 @@ use FindBin;
 use lib "$FindBin::Bin/lib";
 
 package Mojo::BaseTest {
-  use Mojo::Bass -strict;
+  use Jojo::Base -strict;
 
   use base 'Mojo::BaseTest::Base2';
 
@@ -17,16 +17,16 @@ package Mojo::BaseTest {
 }
 
 package Mojo::BaseTestTest {
-  use Mojo::Bass 'Mojo::BaseTest';
+  use Jojo::Base 'Mojo::BaseTest';
 }
 
 package Mojo::BaseTestTestTest {
-  use Mojo::Bass "Mojo'BaseTestTest";
+  use Jojo::Base "Mojo'BaseTestTest";
 }
 
 package main;
 
-use Mojo::Bass;
+use Jojo::Base;
 use Mojo::BaseTest::Base1;
 use Mojo::BaseTest::Base2;
 use Mojo::BaseTest::Base3;
