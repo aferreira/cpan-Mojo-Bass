@@ -19,25 +19,25 @@ use constant SIGNATURES => ($] >= 5.020);
 
 sub import {
   my ($class, $caller) = (shift, caller);
-  return unless my @flags = @_;
+  return unless my $flag = shift;
 
   my @exports = ('has');
 
   # Base
   my $base;
-  if ($flags[0] eq '-base') { $base = $class }
+  if ($flag eq '-base') { $base = $class }
 
   # Strict
-  elsif ($flags[0] eq '-strict') { @exports = () }
+  elsif ($flag eq '-strict') { @exports = () }
 
   # Role
-  elsif ($flags[0] eq '-role') {
+  elsif ($flag eq '-role') {
     Carp::croak 'Role::Tiny 2.000001+ is required for roles' unless ROLES;
     eval "package $caller; use Role::Tiny; 1" or die $@;
   }
 
   # Module
-  elsif (($base = $flags[0]) && !$base->can('new')) {
+  elsif (($base = $flag) && !$base->can('new')) {
     (my $file = $base) =~ s!::|'!/!g;
     require "$file.pm";
   }
@@ -47,7 +47,7 @@ sub import {
   feature->import(':5.10');
 
   # Signatures (Perl 5.20+)
-  if (($flags[1] || '') eq '-signatures') {
+  if ((shift || '') eq '-signatures') {
     Carp::croak 'Subroutine signatures require Perl 5.20+' unless SIGNATURES;
     require experimental;
     experimental->import('signatures');
@@ -59,7 +59,6 @@ sub import {
     push @{"${caller}::ISA"}, $base;
   }
 
-  # "has"
   if (@exports) {
     @_ = (has => sub { Mojo::Base::attr($caller, @_) });
     goto &Sub::Inject::sub_inject;
