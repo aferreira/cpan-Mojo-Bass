@@ -3,6 +3,8 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
+    - Upgrade feature bundle from 5.10 to 5.18
+    - Rename Mojo::Bass to Jojo::Base
     - Use Jojo::Role 0.2.0+ for role support
     - Use %EXPORT_TAGS and %EXPORT_GEN for generating exports
 

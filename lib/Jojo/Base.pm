@@ -45,7 +45,7 @@ sub import {
 
   # Mojo modules are strict!
   $_->import for qw(strict warnings utf8);
-  feature->import(':5.10');
+  feature->import(':5.18');
 
   # Signatures (Perl 5.20+)
   if ((shift || '') eq '-signatures') {
@@ -132,7 +132,7 @@ as lexical subroutine.
 
 L<Jojo::Base>, like L<Mojo::Base>, is a simple base class.
 
-  # Automatically enables "strict", "warnings", "utf8" and Perl 5.10 features
+  # Automatically enables "strict", "warnings", "utf8" and Perl 5.18 features
   use Jojo::Base -strict;
   use Jojo::Base -base;
   use Jojo::Base 'SomeBaseClass';
@@ -145,14 +145,14 @@ L<Jojo::Role> (0.2.0+).
   use strict;
   use warnings;
   use utf8;
-  use feature ':5.10';
+  use feature ':5.18';
   use IO::Handle ();
 
   # use Jojo::Base -base;
   use strict;
   use warnings;
   use utf8;
-  use feature ':5.10';
+  use feature ':5.18';
   use IO::Handle ();
   push @ISA, 'Jojo::Base';
   state sub has { ... }    # attributes
@@ -162,7 +162,7 @@ L<Jojo::Role> (0.2.0+).
   use strict;
   use warnings;
   use utf8;
-  use feature ':5.10';
+  use feature ':5.18';
   use IO::Handle ();
   require SomeBaseClass;
   push @ISA, 'SomeBaseClass';
@@ -173,7 +173,7 @@ L<Jojo::Role> (0.2.0+).
   use strict;
   use warnings;
   use utf8;
-  use feature ':5.10';
+  use feature ':5.18';
   use IO::Handle ();
   use Jojo::Role;
   state sub has { ... }    # attributes
