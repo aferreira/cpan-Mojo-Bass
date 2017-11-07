@@ -3,6 +3,8 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
+    - Use %EXPORT_TAGS and %EXPORT_GEN for generating exports
+
 v0.3     2017-11-06 18:40:25-08:00 America/Los_Angeles (TRIAL RELEASE)
 
     - Export "with" when using "-base"

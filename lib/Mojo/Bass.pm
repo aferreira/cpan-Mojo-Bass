@@ -17,11 +17,8 @@ use constant ROLES => Mojo::Base::ROLES;
 
 use constant SIGNATURES => ($] >= 5.020);
 
-use constant EXPORTS_FOR => {
-  -base => [ROLES ? qw(has with) : qw(has)],
-  -role => [qw(has)],
-  -strict => [],
-};
+our %EXPORT_TAGS;
+our %EXPORT_GEN;
 
 sub import {
   my ($class, $caller) = (shift, caller);
@@ -63,23 +60,31 @@ sub import {
     push @{"${caller}::ISA"}, $base;
   }
 
-  my $exports = EXPORTS_FOR->{$flag};
-  if (@$exports) {
-    @_ = $class->_generate_subs($caller, @$exports);
+  my @exports = @{ $EXPORT_TAGS{$flag} // [] };
+  if (@exports) {
+    @_ = $class->_generate_subs($caller, @exports);
     goto &Sub::Inject::sub_inject;
   }
 }
 
-our %EXPORT_GEN = (
-  has => sub {
-    my (undef, $target) = @_;
-    return sub { Mojo::Base::attr($target, @_) }
-  },
-  with => sub {
-    my (undef, $target) = @_;
-    return sub { Role::Tiny->apply_roles_to_package($target, @_) }
-  },
-);
+BEGIN {
+  %EXPORT_TAGS = (
+    -base => [ROLES ? qw(has with) : qw(has)],
+    -role => [qw(has)],
+    -strict => [],
+  );
+
+  %EXPORT_GEN = (
+    has => sub {
+      my (undef, $target) = @_;
+      return sub { Mojo::Base::attr($target, @_) }
+    },
+    with => sub {
+      my (undef, $target) = @_;
+      return sub { Role::Tiny->apply_roles_to_package($target, @_) }
+    },
+  );
+}
 
 sub _generate_subs {
   my ($class, $target) = (shift, shift);
