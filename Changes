@@ -3,6 +3,8 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
+v0.3     2017-11-06 18:40:25-08:00 America/Los_Angeles (TRIAL RELEASE)
+
     - Export "with" when using "-base"
     - Added -role flag to Mojo::Bass
 
