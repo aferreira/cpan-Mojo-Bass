@@ -1,10 +1,10 @@
-use Mojo::Bass -strict;
+use Jojo::Base -strict;
 
 use Test::More;
 
 BEGIN {
   plan skip_all => 'Role::Tiny 2.000001+ required for this test!'
-    unless Mojo::Bass->ROLES;
+    unless Jojo::Base->ROLES;
 }
 
 package Mojo::RoleTest::Role::LOUD;
@@ -20,7 +20,7 @@ sub hello {
 }
 
 package Mojo::RoleTest::Role::quiet {
-  use Mojo::Bass -role;
+  use Jojo::Base -role;
 
   requires 'name';
 
@@ -33,7 +33,7 @@ package Mojo::RoleTest::Role::quiet {
 }
 
 package Mojo::RoleTest {
-  use Mojo::Bass -base;
+  use Jojo::Base -base;
 
   has name => 'bob';
 
@@ -44,7 +44,7 @@ package Mojo::RoleTest {
 }
 
 package Mojo::RoleTest::Hello {
-  use Mojo::Bass -role;
+  use Jojo::Base -role;
 
   sub hello {'hello mojo!'}
 }
