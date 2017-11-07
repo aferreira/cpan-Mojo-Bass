@@ -1,5 +1,5 @@
 package Mojo::BaseTest::Base1;
-use Mojo::Bass -base;
+use Jojo::Base -base;
 
 has 'foo';
 
