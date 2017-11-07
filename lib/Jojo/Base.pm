@@ -1,5 +1,5 @@
 
-package Mojo::Bass;
+package Jojo::Base;
 
 # ABSTRACT: Mojo::Base + lexical "has"
 use 5.018;
@@ -102,21 +102,21 @@ sub _generate_subs {
 =head1 SYNOPSIS
 
   package Cat {
-    use Mojo::Bass -base;    # requires perl 5.18+
+    use Jojo::Base -base;    # requires perl 5.18+
 
     has name => 'Nyan';
     has ['age', 'weight'] => 4;
   }
 
   package Tiger {
-    use Mojo::Bass 'Cat';
+    use Jojo::Base 'Cat';
 
     has friend => sub { Cat->new };
     has stripes => 42;
   }
 
   package main;
-  use Mojo::Bass -strict;
+  use Jojo::Base -strict;
 
   my $mew = Cat->new(name => 'Longcat');
   say $mew->age;
@@ -127,7 +127,7 @@ sub _generate_subs {
 
 =head1 DESCRIPTION
 
-L<Mojo::Bass> works like L<Mojo::Base> but C<has> is imported
+L<Jojo::Base> works like L<Mojo::Base> but C<has> is imported
 as lexical subroutine.
 
 =head1 CAVEATS
@@ -136,7 +136,7 @@ as lexical subroutine.
 
 =item *
 
-L<Mojo::Bass> requires perl 5.18 or newer
+L<Jojo::Base> requires perl 5.18 or newer
 
 =item *
 
