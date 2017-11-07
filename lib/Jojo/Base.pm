@@ -19,7 +19,7 @@ use Mojo::Util ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
-  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.2.0'); 1 });
+  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.3.0'); 1 });
 
 use constant SIGNATURES => ($] >= 5.020);
 
@@ -39,7 +39,7 @@ sub import {
 
   # Role
   elsif ($flag eq '-role') {
-    Carp::croak 'Jojo::Role 0.2.0+ is required for roles' unless ROLES;
+    Carp::croak 'Jojo::Role 0.3.0+ is required for roles' unless ROLES;
     Jojo::Role->_become_role($caller);
   }
 
@@ -70,6 +70,16 @@ sub import {
     @_ = $class->_generate_subs($caller, @exports);
     goto &Sub::Inject::sub_inject;
   }
+}
+
+sub with_roles {
+  Carp::croak 'Jojo::Role 0.3.0+ is required for roles' unless ROLES;
+  my ($self, @roles) = @_;
+
+  return Jojo::Role->create_class_with_roles($self, @roles)
+    unless my $class = Scalar::Util::blessed $self;
+
+  return Jojo::Role->apply_roles_to_object($self, @roles);
 }
 
 BEGIN {
@@ -144,7 +154,7 @@ L<Jojo::Base>, like L<Mojo::Base>, is a simple base class.
   use Jojo::Base -role;
 
 All four forms save a lot of typing. Note that role support depends on
-L<Jojo::Role> (0.2.0+).
+L<Jojo::Role> (0.3.0+).
 
   # use Jojo::Base -strict;
   use strict;
