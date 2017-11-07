@@ -14,7 +14,8 @@ BEGIN {
   our @ISA = qw(Mojo::Base);
 }
 
-use Carp ();
+use Carp       ();
+use Mojo::Util ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
@@ -44,8 +45,7 @@ sub import {
 
   # Module
   elsif (($base = $flag) && ($flag = '-base') && !$base->can('new')) {
-    (my $file = $base) =~ s!::|'!/!g;
-    require "$file.pm";
+    require(Mojo::Util::class_to_path($base));
   }
 
   # Jojo modules are strict!
