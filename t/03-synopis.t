@@ -1,23 +1,23 @@
 
-use Mojo::Bass -strict;
+use Jojo::Base -strict;
 use Test::More;
 
 package Cat {
-  use Mojo::Bass -base;
+  use Jojo::Base -base;
 
   has name => 'Nyan';
   has ['age', 'weight'] => 4;
 }
 
 package Tiger {
-  use Mojo::Bass 'Cat';
+  use Jojo::Base 'Cat';
 
   has friend => sub { Cat->new };
   has stripes => 42;
 }
 
 package main;
-use Mojo::Bass -strict;
+use Jojo::Base -strict;
 
 my $mew = Cat->new(name => 'Longcat');
 is($mew->age,                    4, 'default Cat age');
