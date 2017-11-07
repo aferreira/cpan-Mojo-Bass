@@ -13,7 +13,8 @@ BEGIN {
 
 use Sub::Inject 0.2.0 ();
 
-use constant ROLES => Mojo::Base::ROLES;
+use constant ROLES =>
+  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.2.0'); 1 });
 
 use constant SIGNATURES => ($] >= 5.020);
 
@@ -33,8 +34,8 @@ sub import {
 
   # Role
   elsif ($flag eq '-role') {
-    Carp::croak 'Role::Tiny 2.000001+ is required for roles' unless ROLES;
-    eval "package $caller; use Role::Tiny; 1" or die $@;
+    Carp::croak 'Jojo::Role 0.2.0+ is required for roles' unless ROLES;
+    Jojo::Role->_become_role($caller);
   }
 
   # Module
@@ -69,7 +70,7 @@ sub import {
 
 BEGIN {
   %EXPORT_TAGS = (
-    -base => [ROLES ? qw(has with) : qw(has)],
+    -base => [qw(has)],
     -role => [qw(has)],
     -strict => [],
   );
@@ -79,11 +80,15 @@ BEGIN {
       my (undef, $target) = @_;
       return sub { Mojo::Base::attr($target, @_) }
     },
-    with => sub {
-      my (undef, $target) = @_;
-      return sub { Role::Tiny->apply_roles_to_package($target, @_) }
-    },
   );
+
+  return unless ROLES;
+
+  push @{ $EXPORT_TAGS{-base} }, @{ $Jojo::Role::EXPORT_TAGS{-with} };
+  push @{ $EXPORT_TAGS{-role} }, @{ $Jojo::Role::EXPORT_TAGS{-role} };
+
+  $EXPORT_GEN{$_} = $Jojo::Role::EXPORT_GEN{$_}
+    for @{$Jojo::Role::EXPORT_TAGS{-role}};
 }
 
 sub _generate_subs {
