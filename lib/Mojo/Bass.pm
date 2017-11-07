@@ -103,7 +103,7 @@ sub _generate_subs {
 =head1 SYNOPSIS
 
   package Cat {
-    use Mojo::Bass -base;
+    use Mojo::Bass -base;    # requires perl 5.18+
 
     has name => 'Nyan';
     has ['age', 'weight'] => 4;
