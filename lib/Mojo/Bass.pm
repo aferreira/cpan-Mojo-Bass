@@ -5,12 +5,11 @@ package Mojo::Bass;
 use 5.018;
 use Mojo::Base -strict;
 
-use Carp ();
-
 BEGIN {
   our @ISA = qw(Mojo::Base);
 }
 
+use Carp ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
