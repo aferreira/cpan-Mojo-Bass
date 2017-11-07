@@ -3,14 +3,18 @@ package Jojo::Base;
 
 # ABSTRACT: Mojo::Base + lexical "has"
 use 5.018;
-use Mojo::Base -strict;
+use strict;
+use warnings;
+use utf8;
+use feature      ();
+use experimental ();
 
 BEGIN {
+  require Mojo::Base;
   our @ISA = qw(Mojo::Base);
 }
 
-use experimental ();
-use Carp         ();
+use Carp ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
