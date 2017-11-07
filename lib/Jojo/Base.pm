@@ -9,7 +9,8 @@ BEGIN {
   our @ISA = qw(Mojo::Base);
 }
 
-use Carp ();
+use experimental ();
+use Carp         ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
@@ -43,14 +44,14 @@ sub import {
     require "$file.pm";
   }
 
-  # Mojo modules are strict!
+  # Jojo modules are strict!
   $_->import for qw(strict warnings utf8);
   feature->import(':5.18');
+  experimental->import('lexical_subs');
 
   # Signatures (Perl 5.20+)
   if ((shift || '') eq '-signatures') {
     Carp::croak 'Subroutine signatures require Perl 5.20+' unless SIGNATURES;
-    require experimental;
     experimental->import('signatures');
   }
 
@@ -132,7 +133,7 @@ as lexical subroutine.
 
 L<Jojo::Base>, like L<Mojo::Base>, is a simple base class.
 
-  # Automatically enables "strict", "warnings", "utf8" and Perl 5.18 features
+  # Enables "strict", "warnings", "utf8" and Perl 5.18 and "lexical_subs" features
   use Jojo::Base -strict;
   use Jojo::Base -base;
   use Jojo::Base 'SomeBaseClass';
@@ -146,6 +147,7 @@ L<Jojo::Role> (0.2.0+).
   use warnings;
   use utf8;
   use feature ':5.18';
+  use experimental 'lexical_subs';
   use IO::Handle ();
 
   # use Jojo::Base -base;
@@ -153,6 +155,7 @@ L<Jojo::Role> (0.2.0+).
   use warnings;
   use utf8;
   use feature ':5.18';
+  use experimental 'lexical_subs';
   use IO::Handle ();
   push @ISA, 'Jojo::Base';
   state sub has { ... }    # attributes
@@ -163,6 +166,7 @@ L<Jojo::Role> (0.2.0+).
   use warnings;
   use utf8;
   use feature ':5.18';
+  use experimental 'lexical_subs';
   use IO::Handle ();
   require SomeBaseClass;
   push @ISA, 'SomeBaseClass';
@@ -174,6 +178,7 @@ L<Jojo::Role> (0.2.0+).
   use warnings;
   use utf8;
   use feature ':5.18';
+  use experimental 'lexical_subs';
   use IO::Handle ();
   use Jojo::Role;
   state sub has { ... }    # attributes
@@ -205,6 +210,15 @@ Role support depends on L<Jojo::Role> instead of L<Role::Tiny>
 =item *
 
 C<with> is exported alongside C<has> (when L<Jojo::Role> is available)
+
+=item *
+
+Feature bundle for Perl 5.18 is enabled by default, instead of 5.10
+
+=item *
+
+Support for L<lexical subroutines|perlsub/"Lexical Subroutines"> is enabled
+by default
 
 =back
 
