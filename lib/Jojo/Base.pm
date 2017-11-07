@@ -127,8 +127,86 @@ sub _generate_subs {
 
 =head1 DESCRIPTION
 
-L<Jojo::Base> works like L<Mojo::Base> but C<has> is imported
+L<Jojo::Base> works kind of like L<Mojo::Base> but C<has> is imported
 as lexical subroutine.
+
+L<Jojo::Base>, like L<Mojo::Base>, is a simple base class.
+
+  # Automatically enables "strict", "warnings", "utf8" and Perl 5.10 features
+  use Jojo::Base -strict;
+  use Jojo::Base -base;
+  use Jojo::Base 'SomeBaseClass';
+  use Jojo::Base -role;
+
+All four forms save a lot of typing. Note that role support depends on
+L<Jojo::Role> (0.2.0+).
+
+  # use Jojo::Base -strict;
+  use strict;
+  use warnings;
+  use utf8;
+  use feature ':5.10';
+  use IO::Handle ();
+
+  # use Jojo::Base -base;
+  use strict;
+  use warnings;
+  use utf8;
+  use feature ':5.10';
+  use IO::Handle ();
+  push @ISA, 'Jojo::Base';
+  state sub has { ... }    # attributes
+  state sub with { ... }   # role composition
+
+  # use Jojo::Base 'SomeBaseClass';
+  use strict;
+  use warnings;
+  use utf8;
+  use feature ':5.10';
+  use IO::Handle ();
+  require SomeBaseClass;
+  push @ISA, 'SomeBaseClass';
+  state sub has { ... }    # attributes
+  state sub with { ... }   # role composition
+
+  # use Jojo::Base -role;
+  use strict;
+  use warnings;
+  use utf8;
+  use feature ':5.10';
+  use IO::Handle ();
+  use Jojo::Role;
+  state sub has { ... }    # attributes
+
+On Perl 5.20+ you can also append a C<-signatures> flag to all four forms and
+enable support for L<subroutine signatures|perlsub/"Signatures">.
+
+  # Also enable signatures
+  use Jojo::Base -strict, -signatures;
+  use Jojo::Base -base, -signatures;
+  use Jojo::Base 'SomeBaseClass', -signatures;
+  use Jojo::Base -role, -signatures;
+
+This will also disable experimental warnings on versions of Perl where this
+feature was still experimental.
+
+=head2 DIFFERENCES FROM C<Mojo::Base>
+
+=over 4
+
+=item *
+
+All functions are exported as lexical subs
+
+=item *
+
+Role support depends on L<Jojo::Role> instead of L<Role::Tiny>
+
+=item *
+
+C<with> is exported alongside C<has> (when L<Jojo::Role> is available)
+
+=back
 
 =head1 CAVEATS
 
@@ -149,6 +227,6 @@ some code may need to be enclosed in blocks to avoid warnings like
 
 =head1 SEE ALSO
 
-L<Mojo::Base>.
+L<Mojo::Base>, L<Jojo::Role>.
 
 =cut
