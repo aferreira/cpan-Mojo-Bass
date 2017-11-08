@@ -3,6 +3,9 @@ Release history for Jojo-Base
 
 {{$NEXT}}
 
+    - Depend on Jojo::Role 0.4.0+
+    - Fix "with" from "-base" or "-role"
+
 v0.4.1     2017-11-07 16:19:26-08:00 America/Los_Angeles
 
     - Depend on "experimental" (core after v5.19.1)

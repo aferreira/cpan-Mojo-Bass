@@ -19,7 +19,7 @@ use Mojo::Util ();
 use Sub::Inject 0.2.0 ();
 
 use constant ROLES =>
-  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.3.0'); 1 });
+  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.4.0'); 1 });
 
 use constant SIGNATURES => ($] >= 5.020);
 
@@ -39,7 +39,7 @@ sub import {
 
   # Role
   elsif ($flag eq '-role') {
-    Carp::croak 'Jojo::Role 0.3.0+ is required for roles' unless ROLES;
+    Carp::croak 'Jojo::Role 0.4.0+ is required for roles' unless ROLES;
     Jojo::Role->_become_role($caller);
   }
 
@@ -72,8 +72,10 @@ sub import {
   }
 }
 
+sub role_provider {'Jojo::Role'}
+
 sub with_roles {
-  Carp::croak 'Jojo::Role 0.3.0+ is required for roles' unless ROLES;
+  Carp::croak 'Jojo::Role 0.4.0+ is required for roles' unless ROLES;
   my ($self, @roles) = @_;
 
   return Jojo::Role->create_class_with_roles($self, @roles)
@@ -155,7 +157,7 @@ to be effortless and powerful.
   use Jojo::Base -role;
 
 All four forms save a lot of typing. Note that role support depends on
-L<Jojo::Role> (0.3.0+).
+L<Jojo::Role> (0.4.0+).
 
   # use Jojo::Base -strict;
   use strict;
