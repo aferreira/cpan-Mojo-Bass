@@ -145,7 +145,8 @@ sub _generate_subs {
 L<Jojo::Base> works kind of like L<Mojo::Base> but C<has> is imported
 as lexical subroutine.
 
-L<Jojo::Base>, like L<Mojo::Base>, is a simple base class.
+L<Jojo::Base>, like L<Mojo::Base>, is a simple base class designed
+to be effortless and powerful.
 
   # Enables "strict", "warnings", "utf8" and Perl 5.18 and "lexical_subs" features
   use Jojo::Base -strict;
