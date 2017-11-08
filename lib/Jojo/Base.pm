@@ -258,4 +258,9 @@ some code may need to be enclosed in blocks to avoid warnings like
 
 L<Mojo::Base>, L<Jojo::Role>.
 
+=head1 ACKNOWLEDGMENTS
+
+Thanks to Sebastian Riedel and others, the authors
+and copyright holders of L<Mojo::Base>.
+
 =cut
