@@ -3,8 +3,7 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
-    - Use Jojo::Role 0.2.0+ for role support
-    - Use %EXPORT_TAGS and %EXPORT_GEN for generating exports
+    - Deprecate Mojo::Bass in favor of Jojo::Base
 
 v0.3     2017-11-06 18:40:25-08:00 America/Los_Angeles (TRIAL RELEASE)
 
