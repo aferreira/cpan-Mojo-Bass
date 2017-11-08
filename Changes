@@ -3,6 +3,8 @@ Release history for Jojo-Base
 
 {{$NEXT}}
 
+v0.5     2017-11-08 10:53:07-08:00 America/Los_Angeles
+
     - Export a dummy "with" when role support is missing
     - Depend on Jojo::Role 0.4.0+
     - Fix "with" from "-base" or "-role"
