@@ -3,7 +3,7 @@ use Jojo::Base -strict;
 use Test::More;
 
 BEGIN {
-  plan skip_all => 'Role::Tiny 2.000001+ required for this test!'
+  plan skip_all => 'Jojo::Role 0.3.0+ required for this test!'
     unless Jojo::Base->ROLES;
 }
 
