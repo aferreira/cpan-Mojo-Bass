@@ -3,6 +3,8 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
+v0.4     2017-11-07 16:12:23-08:00 America/Los_Angeles
+
     - Use Jojo::Role 0.3.0+ for role support (including shorthands)
     - Automatically enable "lexical_subs" feature
     - Upgrade feature bundle from 5.10 to 5.18
