@@ -3,6 +3,8 @@ Release history for Mojo-Bass
 
 {{$NEXT}}
 
+v0.4.1     2017-11-07 16:19:26-08:00 America/Los_Angeles
+
     - Depend on "experimental" (core after v5.19.1)
 
 v0.4     2017-11-07 16:12:23-08:00 America/Los_Angeles
