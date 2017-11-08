@@ -8,7 +8,7 @@ BEGIN {
 }
 
 package Mojo::RoleTest::Role::LOUD;
-use Role::Tiny;
+use Jojo::Role;
 
 sub yell {'HEY!'}
 
