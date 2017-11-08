@@ -65,7 +65,7 @@ sub import {
     push @{"${caller}::ISA"}, $base;
   }
 
-  my @exports = @{ $EXPORT_TAGS{$flag} // [] };
+  my @exports = @{$EXPORT_TAGS{$flag} // []};
   if (@exports) {
     @_ = $class->_generate_subs($caller, @exports);
     goto &Sub::Inject::sub_inject;
@@ -85,23 +85,21 @@ sub with_roles {
 }
 
 BEGIN {
-  %EXPORT_TAGS = (
-    -base => [qw(has)],
-    -role => [qw(has)],
-    -strict => [],
-  );
+  %EXPORT_TAGS = (-base => [qw(has with)], -role => [qw(has)], -strict => [],);
 
   %EXPORT_GEN = (
     has => sub {
       my (undef, $target) = @_;
       return sub { Mojo::Base::attr($target, @_) }
     },
+    with => sub {    # dummy
+      return sub { Carp::croak 'Jojo::Role 0.4.0+ is required for roles' }
+    },
   );
 
   return unless ROLES;
 
-  push @{ $EXPORT_TAGS{-base} }, @{ $Jojo::Role::EXPORT_TAGS{-with} };
-  push @{ $EXPORT_TAGS{-role} }, @{ $Jojo::Role::EXPORT_TAGS{-role} };
+  push @{$EXPORT_TAGS{-role}}, @{$Jojo::Role::EXPORT_TAGS{-role}};
 
   $EXPORT_GEN{$_} = $Jojo::Role::EXPORT_GEN{$_}
     for @{$Jojo::Role::EXPORT_TAGS{-role}};

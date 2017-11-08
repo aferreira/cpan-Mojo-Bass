@@ -3,6 +3,7 @@ Release history for Jojo-Base
 
 {{$NEXT}}
 
+    - Export a dummy "with" when role support is missing
     - Depend on Jojo::Role 0.4.0+
     - Fix "with" from "-base" or "-role"
 
