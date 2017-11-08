@@ -7,7 +7,6 @@ perl:
     - "5.18"
 install:
     - cpanm -q --notest Dist::Zilla
-    - cpanm -q --notest FERREIRA/Jojo-Role-0.2.0-TRIAL.tar.gz
     - dzil authordeps --missing | cpanm -q --notest
     - dzil listdeps --author --missing | cpanm -q --notest
 script:
