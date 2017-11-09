@@ -27,8 +27,9 @@ our %EXPORT_TAGS;
 our %EXPORT_GEN;
 
 sub import {
-  my ($class, $caller) = (shift, caller);
+  my $class = shift;
   return unless my $flag = shift;
+  my $caller = caller;
 
   # Base
   my $base;
