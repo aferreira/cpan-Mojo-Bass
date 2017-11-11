@@ -238,6 +238,57 @@ by default
 
 =back
 
+=head1 FUNCTIONS
+
+L<Jojo::Base> implements the following functions, which can be imported with
+the C<-base> flag, or by setting a base class.
+
+=head2 has
+
+  has 'name';
+  has ['name1', 'name2', 'name3'];
+  has name => 'foo';
+  has name => sub {...};
+  has ['name1', 'name2', 'name3'] => 'foo';
+  has ['name1', 'name2', 'name3'] => sub {...};
+
+Create attributes for hash-based objects, just like the L<Mojo::Base/"attr"> method.
+
+=head2 with
+
+  with 'SubClass::Role::One';
+  with '+One', '+Two';
+
+Composes the current package with one or more L<Jojo::Role> roles.
+For roles following the naming scheme C<MyClass::Role::RoleName> you
+can use the shorthand C<+RoleName>. Note that role support depends on
+L<Jojo::Role> (0.4.0+).
+
+It works with L<Jojo::Role> or L<Role::Tiny> roles.
+
+=head1 METHODS
+
+L<Jojo::Base> inherits all methods from L<Mojo::Base> and implements
+the following new ones.
+
+=head2 with_roles
+
+  my $new_class = SubClass->with_roles('SubClass::Role::One');
+  my $new_class = SubClass->with_roles('+One', '+Two');
+  $object       = $object->with_roles('+One', '+Two');
+
+Create a new class with one or more roles. If called on a class
+returns the new class, or if called on an object reblesses the object into the
+new class. For roles following the naming scheme C<MyClass::Role::RoleName> you
+can use the shorthand C<+RoleName>. Note that role support depends on
+L<Jojo::Role> (0.4.0+).
+
+  # Create a new class with the role "SubClass::Role::Foo" and instantiate it
+  my $new_class = SubClass->with_roles('+Foo');
+  my $object    = $new_class->new;
+
+It works with L<Jojo::Role> or L<Role::Tiny> roles.
+
 =head1 CAVEATS
 
 =over 4
