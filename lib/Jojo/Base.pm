@@ -14,12 +14,12 @@ BEGIN {
   our @ISA = qw(Mojo::Base);
 }
 
-use Carp       ();
-use Mojo::Util ();
+use Carp             ();
+use Module::Spec::V1 ();
+use Mojo::Util       ();
 use Sub::Inject 0.2.0 ();
 
-use constant ROLES =>
-  !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.4.0'); 1 });
+use constant ROLES => !!Module::Spec::V1::try_module('Jojo::Role~0.4.0');
 
 use constant SIGNATURES => ($] >= 5.020);
 
@@ -45,8 +45,10 @@ sub import {
   }
 
   # Module
-  elsif (($base = $flag) && ($flag = '-base') && !$base->can('new')) {
-    require(Mojo::Util::class_to_path($base));
+  elsif (($base = $flag) && ($flag = '-base')) {
+
+    state $_NEED_OPTS = {require => sub { !shift->can('new') },};
+    $base = Module::Spec::V1::need_module($base, $_NEED_OPTS);
   }
 
   # Jojo modules are strict!
@@ -235,6 +237,14 @@ Feature bundle for Perl 5.18 is enabled by default, instead of 5.10
 
 Support for L<lexical subroutines|perlsub/"Lexical Subroutines"> is enabled
 by default
+
+=item *
+
+L<Module specs|Module::Spec::V1> (such as C<SomeModule~2.3>) are accepted to specify base classes.
+
+=item *
+
+Single quotes (C<'>) are not accepted as package separators.
 
 =back
 
