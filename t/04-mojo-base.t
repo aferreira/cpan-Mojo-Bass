@@ -21,7 +21,7 @@ package Mojo::BaseTestTest {
 }
 
 package Mojo::BaseTestTestTest {
-  use Jojo::Base "Mojo'BaseTestTest";
+  use Jojo::Base "Mojo::BaseTestTest";
 }
 
 package main;
