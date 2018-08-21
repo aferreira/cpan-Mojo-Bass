@@ -11,8 +11,8 @@
 # etc-quack generate copies
 *.orig
 
-# dev lib
-/inc/
+# local lib
+/local/
 
 ## dzil build files
 #/Sub-Inject-*.tar.gz
