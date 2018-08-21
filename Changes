@@ -3,6 +3,8 @@ Release history for Jojo-Base
 
 {{$NEXT}}
 
+v0.7     2018-08-21 12:34:02-07:00 America/Los_Angeles
+
     - Use public Jojo::Role->make_role() method
     - Require Jojo::Role 0.5.0+
 
